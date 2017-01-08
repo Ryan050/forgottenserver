@@ -1,3 +1,24 @@
+cmake_minimum_required(VERSION 2.8)
+
+# Find packages.
+find_package(PugiXML REQUIRED)
+find_package(LuaJIT)
+find_package(MySQL)
+find_package(Threads)
+
+option(USE_LUAJIT "Use LuaJIT" ${LUAJIT_FOUND})
+
+if(USE_LUAJIT)
+	find_package(LuaJIT REQUIRED)
+	if(APPLE)
+		set(CMAKE_EXE_LINKER_FLAGS "-pagezero_size 10000 -image_base 100000000")
+	endif()
+else()
+	find_package(Lua)
+endif()
+
+find_package(Boost 1.53.0 COMPONENTS iostreams system REQUIRED)
+
 set(tfs_SRC
 	${CMAKE_CURRENT_LIST_DIR}/otpch.cpp
 	${CMAKE_CURRENT_LIST_DIR}/actions.cpp
@@ -42,22 +63,14 @@ set(tfs_SRC
 	${CMAKE_CURRENT_LIST_DIR}/monsters.cpp
 	${CMAKE_CURRENT_LIST_DIR}/mounts.cpp
 	${CMAKE_CURRENT_LIST_DIR}/movement.cpp
-	${CMAKE_CURRENT_LIST_DIR}/networkmessage.cpp
 	${CMAKE_CURRENT_LIST_DIR}/npc.cpp
 	${CMAKE_CURRENT_LIST_DIR}/otserv.cpp
 	${CMAKE_CURRENT_LIST_DIR}/outfit.cpp
-	${CMAKE_CURRENT_LIST_DIR}/outputmessage.cpp
 	${CMAKE_CURRENT_LIST_DIR}/party.cpp
 	${CMAKE_CURRENT_LIST_DIR}/player.cpp
 	${CMAKE_CURRENT_LIST_DIR}/position.cpp
-	${CMAKE_CURRENT_LIST_DIR}/protocol.cpp
-	${CMAKE_CURRENT_LIST_DIR}/protocolgame.cpp
-	${CMAKE_CURRENT_LIST_DIR}/protocollogin.cpp
-	${CMAKE_CURRENT_LIST_DIR}/protocolold.cpp
-	${CMAKE_CURRENT_LIST_DIR}/protocolstatus.cpp
 	${CMAKE_CURRENT_LIST_DIR}/quests.cpp
 	${CMAKE_CURRENT_LIST_DIR}/raids.cpp
-	${CMAKE_CURRENT_LIST_DIR}/rsa.cpp
 	${CMAKE_CURRENT_LIST_DIR}/scheduler.cpp
 	${CMAKE_CURRENT_LIST_DIR}/scriptmanager.cpp
 	${CMAKE_CURRENT_LIST_DIR}/server.cpp
@@ -77,3 +90,15 @@ set(tfs_SRC
 	${CMAKE_CURRENT_LIST_DIR}/wildcardtree.cpp
 )
 
+set(INCLUDE_DIRS ${MYSQL_INCLUDE_DIR} ${LUA_INCLUDE_DIR} ${Boost_INCLUDE_DIRS} ${PUGIXML_INCLUDE_DIR})
+set(LIBRARIES ${MYSQL_CLIENT_LIBS} ${LUA_LIBRARIES} ${Boost_LIBRARIES} ${PUGIXML_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT})
+
+add_executable(tfs ${tfs_SRC})
+add_subdirectory(networking)
+
+include_directories(${INCLUDE_DIRS})
+target_link_libraries(tfs networking ${LIBRARIES})
+
+set_target_properties(tfs PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT "otpch.h")
+set_target_properties(tfs PROPERTIES COTIRE_ADD_UNITY_BUILD FALSE)
+cotire(tfs)

@@ -21,8 +21,8 @@
 
 #include "configmanager.h"
 #include "connection.h"
-#include "outputmessage.h"
-#include "protocol.h"
+#include "networking/outputmessage.h"
+#include "networking/protocol.h"
 #include "scheduler.h"
 #include "server.h"
 

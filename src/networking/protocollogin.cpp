@@ -17,17 +17,17 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#include "otpch.h"
+#include "../otpch.h"
 
 #include "protocollogin.h"
 
 #include "outputmessage.h"
-#include "tasks.h"
+#include "../tasks.h"
 
-#include "configmanager.h"
-#include "iologindata.h"
-#include "ban.h"
-#include "game.h"
+#include "../configmanager.h"
+#include "../iologindata.h"
+#include "../ban.h"
+#include "../game.h"
 
 extern ConfigManager g_config;
 extern Game g_game;

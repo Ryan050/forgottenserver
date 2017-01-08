@@ -17,7 +17,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#include "otpch.h"
+#include "../otpch.h"
 
 #include <boost/range/adaptor/reversed.hpp>
 
@@ -25,16 +25,16 @@
 
 #include "outputmessage.h"
 
-#include "player.h"
+#include "../player.h"
 
-#include "configmanager.h"
-#include "actions.h"
-#include "game.h"
-#include "iologindata.h"
-#include "iomarket.h"
-#include "waitlist.h"
-#include "ban.h"
-#include "scheduler.h"
+#include "../configmanager.h"
+#include "../actions.h"
+#include "../game.h"
+#include "../iologindata.h"
+#include "../iomarket.h"
+#include "../waitlist.h"
+#include "../ban.h"
+#include "../scheduler.h"
 
 extern ConfigManager g_config;
 extern Actions actions;

@@ -17,7 +17,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#include "otpch.h"
+#include "../otpch.h"
 
 #include "rsa.h"
 
@@ -72,7 +72,7 @@ void RSA::setKey(const char* pString, const char* qString)
 	mpz_clear(e);
 }
 
-void RSA::decrypt(char* msg) const 
+void RSA::decrypt(char* msg) const
 {
 	mpz_t c, m;
 	mpz_init2(c, 1024);
