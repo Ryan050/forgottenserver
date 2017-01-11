@@ -5,9 +5,13 @@ compiler:
   - clang
   - gcc
 env:
-  - LUAJIT=OFF
-  - LUAJIT=ON
-cache: apt
+  global:
+    - CCACHE_SLOPPINESS=pch_defines,time_macros
+    - USE_CCACHE=1
+  matrix:
+    - LUAJIT=OFF
+    - LUAJIT=ON
+cache: ccache
 addons:
   apt:
     packages:
