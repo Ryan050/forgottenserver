@@ -40,20 +40,6 @@ struct Wait
 
 using WaitList = std::list<Wait>;
 
-void cleanupList(WaitList& list)
-{
-	int64_t time = OTSYS_TIME();
-
-	auto it = list.begin(), end = list.end();
-	while (it != end) {
-		if ((it->timeout - time) <= 0) {
-			it = list.erase(it);
-		} else {
-			++it;
-		}
-	}
-}
-
 std::size_t getTimeout(std::size_t slot)
 {
 	//timeout is set to 15 seconds longer than expected retry attempt
@@ -64,17 +50,11 @@ std::size_t getTimeout(std::size_t slot)
 
 struct WaitListInfo
 {
-	WaitList priorityWaitList;
 	WaitList waitList;
+	WaitList::iterator priorityEnd = waitList.end();
 
 	std::pair<WaitList::iterator, WaitList::size_type> findClient(const Player *player) {
 		std::size_t slot = 1;
-		for (auto it = priorityWaitList.begin(), end = priorityWaitList.end(); it != end; ++it, ++slot) {
-			if (it->playerGUID == player->getGUID()) {
-				return {it, slot};
-			}
-		}
-
 		for (auto it = waitList.begin(), end = waitList.end(); it != end; ++it, ++slot) {
 			if (it->playerGUID == player->getGUID()) {
 				return {it, slot};
@@ -112,14 +92,21 @@ bool WaitingList::clientLogin(const Player* player)
 	}
 
 	uint32_t maxPlayers = static_cast<uint32_t>(g_config.getNumber(ConfigManager::MAX_PLAYERS));
-	if (maxPlayers == 0 || (info->priorityWaitList.empty() && info->waitList.empty() && g_game.getPlayersOnline() < maxPlayers)) {
+	if (maxPlayers == 0 || (info->waitList.empty() && g_game.getPlayersOnline() < maxPlayers)) {
 		return true;
 	}
 
-	cleanupList(info->priorityWaitList);
-	cleanupList(info->waitList);
+	int64_t time = OTSYS_TIME();
 
-	WaitList::iterator it;
+	WaitList::iterator it = info->waitList.begin(), end = info->waitList.end();
+	while (it != end) {
+		if ((it->timeout - time) <= 0) {
+			it = info->waitList.erase(it);
+		} else {
+			++it;
+		}
+	}
+
 	WaitList::size_type slot;
 	std::tie(it, slot) = info->findClient(player);
 	if (it != info->waitList.end()) {
@@ -130,16 +117,15 @@ bool WaitingList::clientLogin(const Player* player)
 		}
 
 		//let them wait a bit longer
-		it->timeout = OTSYS_TIME() + (getTimeout(slot) * 1000);
+		it->timeout = time + (getTimeout(slot) * 1000);
 		return false;
 	}
 
-	slot = info->priorityWaitList.size();
 	if (player->isPremium()) {
-		info->priorityWaitList.emplace_back(OTSYS_TIME() + (getTimeout(slot + 1) * 1000), player->getGUID());
+		slot = static_cast<std::size_t>(std::distance(info->waitList.begin(), info->priorityEnd));
+		info->priorityEnd = info->waitList.emplace(info->priorityEnd, time + (getTimeout(slot + 1) * 1000), player->getGUID());
 	} else {
-		slot += info->waitList.size();
-		info->waitList.emplace_back(OTSYS_TIME() + (getTimeout(slot + 1) * 1000), player->getGUID());
+		info->waitList.emplace_back(time + (getTimeout(info->waitList.size() + 1) * 1000), player->getGUID());
 	}
 	return false;
 }
