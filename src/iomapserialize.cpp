@@ -29,7 +29,7 @@ void IOMapSerialize::loadHouseItems(Map* map)
 {
 	int64_t start = OTSYS_TIME();
 
-	DBResult_ptr result = Database::getInstance().storeQuery("SELECT `data` FROM `tile_store`");
+	DBResult_ptr result = Database().storeQuery("SELECT `data` FROM `tile_store`");
 	if (!result) {
 		return;
 	}
@@ -67,7 +67,7 @@ void IOMapSerialize::loadHouseItems(Map* map)
 bool IOMapSerialize::saveHouseItems()
 {
 	int64_t start = OTSYS_TIME();
-	Database& db = Database::getInstance();
+	Database db;
 	std::ostringstream query;
 
 	//Start the transaction
@@ -270,7 +270,7 @@ void IOMapSerialize::saveTile(PropWriteStream& stream, const Tile* tile)
 
 bool IOMapSerialize::loadHouseInfo()
 {
-	Database& db = Database::getInstance();
+	Database db;
 
 	DBResult_ptr result = db.storeQuery("SELECT `id`, `owner`, `paid`, `warnings` FROM `houses`");
 	if (!result) {
@@ -300,7 +300,7 @@ bool IOMapSerialize::loadHouseInfo()
 
 bool IOMapSerialize::saveHouseInfo()
 {
-	Database& db = Database::getInstance();
+	Database db;
 
 	DBTransaction transaction;
 	if (!transaction.begin()) {

@@ -26,15 +26,20 @@
 
 extern ConfigManager g_config;
 
-Database::~Database()
-{
-	if (handle != nullptr) {
-		mysql_close(handle);
-	}
+namespace {
+
+MYSQL* handle = nullptr;
+std::recursive_mutex databaseLock;
+uint64_t maxPacketSize = 1048576;
+
 }
 
 bool Database::connect()
 {
+	if (handle) {
+		return true;
+	}
+
 	// connection handle initialization
 	handle = mysql_init(nullptr);
 	if (!handle) {
@@ -57,6 +62,13 @@ bool Database::connect()
 		maxPacketSize = result->getNumber<uint64_t>("Value");
 	}
 	return true;
+}
+
+void Database::disconnect() {
+	if (handle != nullptr) {
+		mysql_close(handle);
+		handle = nullptr;
+	}
 }
 
 bool Database::beginTransaction()
@@ -181,6 +193,14 @@ std::string Database::escapeBlob(const char* s, uint32_t length) const
 	return escaped;
 }
 
+uint64_t Database::getLastInsertId() const {
+	return static_cast<uint64_t>(mysql_insert_id(handle));
+}
+
+uint64_t Database::getMaxPacketSize() const {
+	return maxPacketSize;
+}
+
 DBResult::DBResult(MYSQL_RES* res)
 {
 	handle = res;
@@ -255,7 +275,7 @@ bool DBInsert::addRow(const std::string& row)
 	// adds new row to buffer
 	const size_t rowLength = row.length();
 	length += rowLength;
-	if (length > Database::getInstance().getMaxPacketSize() && !execute()) {
+	if (length > Database().getMaxPacketSize() && !execute()) {
 		return false;
 	}
 
@@ -288,7 +308,7 @@ bool DBInsert::execute()
 	}
 
 	// executes buffer
-	bool res = Database::getInstance().executeQuery(query + values);
+	bool res = Database().executeQuery(query + values);
 	values.clear();
 	length = query.length();
 	return res;

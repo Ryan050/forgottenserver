@@ -4579,7 +4579,7 @@ void Game::updatePremium(Account& account)
 
 void Game::loadMotdNum()
 {
-	Database& db = Database::getInstance();
+	Database db;
 
 	DBResult_ptr result = db.storeQuery("SELECT `value` FROM `server_config` WHERE `config` = 'motd_num'");
 	if (result) {
@@ -4601,7 +4601,7 @@ void Game::loadMotdNum()
 
 void Game::saveMotdNum() const
 {
-	Database& db = Database::getInstance();
+	Database db;
 
 	std::ostringstream query;
 	query << "UPDATE `server_config` SET `value` = '" << motdNum << "' WHERE `config` = 'motd_num'";
@@ -4628,7 +4628,7 @@ void Game::checkPlayersRecord()
 
 void Game::updatePlayersRecord() const
 {
-	Database& db = Database::getInstance();
+	Database db;
 
 	std::ostringstream query;
 	query << "UPDATE `server_config` SET `value` = '" << playersRecord << "' WHERE `config` = 'players_record'";
@@ -4637,7 +4637,7 @@ void Game::updatePlayersRecord() const
 
 void Game::loadPlayersRecord()
 {
-	Database& db = Database::getInstance();
+	Database db;
 
 	DBResult_ptr result = db.storeQuery("SELECT `value` FROM `server_config` WHERE `config` = 'players_record'");
 	if (result) {
