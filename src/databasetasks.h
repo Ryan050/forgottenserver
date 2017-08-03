@@ -50,7 +50,7 @@ class DatabaseTasks : public ThreadHolder<DatabaseTasks>
 
 		Database db;
 		std::thread thread;
-		std::list<DatabaseTask> tasks;
+		std::deque<DatabaseTask> tasks;
 		std::mutex taskLock;
 		std::condition_variable taskSignal;
 };

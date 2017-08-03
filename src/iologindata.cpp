@@ -582,7 +582,7 @@ bool IOLoginData::saveItems(const Player* player, const ItemBlockList& itemList,
 	std::ostringstream ss;
 
 	using ContainerBlock = std::pair<Container*, int32_t>;
-	std::list<ContainerBlock> queue;
+	std::deque<ContainerBlock> queue;
 
 	int32_t runningId = 100;
 

@@ -45,7 +45,7 @@ class Guild
 		const std::string& getName() const {
 			return name;
 		}
-		const std::list<Player*>& getMembersOnline() const {
+		const std::vector<Player*>& getMembersOnline() const {
 			return membersOnline;
 		}
 		uint32_t getMemberCount() const {
@@ -67,7 +67,7 @@ class Guild
 		}
 
 	private:
-		std::list<Player*> membersOnline;
+		std::vector<Player*> membersOnline;
 		std::vector<GuildRank> ranks;
 		std::string name;
 		std::string motd;

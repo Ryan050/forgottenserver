@@ -35,7 +35,12 @@ void Guild::addMember(Player* player)
 
 void Guild::removeMember(Player* player)
 {
-	membersOnline.remove(player);
+	auto it = std::find(membersOnline.begin(), membersOnline.end(), player);
+	if (it != membersOnline.end()) {
+		std::iter_swap(it, membersOnline.end() - 1);
+		membersOnline.pop_back();
+	}
+
 	for (Player* member : membersOnline) {
 		g_game.updatePlayerHelpers(*member);
 	}

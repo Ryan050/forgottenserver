@@ -79,7 +79,7 @@ class Dispatcher : public ThreadHolder<Dispatcher> {
 		std::mutex taskLock;
 		std::condition_variable taskSignal;
 
-		std::list<Task*> taskList;
+		std::deque<Task*> taskList;
 		uint64_t dispatcherCycle = 0;
 };
 

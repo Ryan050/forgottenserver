@@ -193,7 +193,7 @@ void MoveEvents::addEvent(MoveEvent* moveEvent, int32_t id, MoveListMap& map)
 		moveEventList.moveEvent[moveEvent->getEventType()].push_back(moveEvent);
 		map[id] = moveEventList;
 	} else {
-		std::list<MoveEvent*>& moveEventList = it->second.moveEvent[moveEvent->getEventType()];
+		auto& moveEventList = it->second.moveEvent[moveEvent->getEventType()];
 		for (MoveEvent* existingMoveEvent : moveEventList) {
 			if (existingMoveEvent->getSlot() == moveEvent->getSlot()) {
 				std::cout << "[Warning - MoveEvents::addEvent] Duplicate move event found: " << id << std::endl;
@@ -222,7 +222,7 @@ MoveEvent* MoveEvents::getEvent(Item* item, MoveEvent_t eventType, slots_t slot)
 
 	auto it = itemIdMap.find(item->getID());
 	if (it != itemIdMap.end()) {
-		std::list<MoveEvent*>& moveEventList = it->second.moveEvent[eventType];
+		auto& moveEventList = it->second.moveEvent[eventType];
 		for (MoveEvent* moveEvent : moveEventList) {
 			if ((moveEvent->getSlot() & slotp) != 0) {
 				return moveEvent;
@@ -239,7 +239,7 @@ MoveEvent* MoveEvents::getEvent(Item* item, MoveEvent_t eventType)
 	if (item->hasAttribute(ITEM_ATTRIBUTE_UNIQUEID)) {
 		it = uniqueIdMap.find(item->getUniqueId());
 		if (it != uniqueIdMap.end()) {
-			std::list<MoveEvent*>& moveEventList = it->second.moveEvent[eventType];
+			auto& moveEventList = it->second.moveEvent[eventType];
 			if (!moveEventList.empty()) {
 				return *moveEventList.begin();
 			}
@@ -249,7 +249,7 @@ MoveEvent* MoveEvents::getEvent(Item* item, MoveEvent_t eventType)
 	if (item->hasAttribute(ITEM_ATTRIBUTE_ACTIONID)) {
 		it = actionIdMap.find(item->getActionId());
 		if (it != actionIdMap.end()) {
-			std::list<MoveEvent*>& moveEventList = it->second.moveEvent[eventType];
+			auto& moveEventList = it->second.moveEvent[eventType];
 			if (!moveEventList.empty()) {
 				return *moveEventList.begin();
 			}
@@ -258,7 +258,7 @@ MoveEvent* MoveEvents::getEvent(Item* item, MoveEvent_t eventType)
 
 	it = itemIdMap.find(item->getID());
 	if (it != itemIdMap.end()) {
-		std::list<MoveEvent*>& moveEventList = it->second.moveEvent[eventType];
+		auto& moveEventList = it->second.moveEvent[eventType];
 		if (!moveEventList.empty()) {
 			return *moveEventList.begin();
 		}
@@ -274,7 +274,7 @@ void MoveEvents::addEvent(MoveEvent* moveEvent, const Position& pos, MovePosList
 		moveEventList.moveEvent[moveEvent->getEventType()].push_back(moveEvent);
 		map[pos] = moveEventList;
 	} else {
-		std::list<MoveEvent*>& moveEventList = it->second.moveEvent[moveEvent->getEventType()];
+		auto& moveEventList = it->second.moveEvent[moveEvent->getEventType()];
 		if (!moveEventList.empty()) {
 			std::cout << "[Warning - MoveEvents::addEvent] Duplicate move event found: " << pos << std::endl;
 		}
@@ -287,7 +287,7 @@ MoveEvent* MoveEvents::getEvent(const Tile* tile, MoveEvent_t eventType)
 {
 	auto it = positionMap.find(tile->getPosition());
 	if (it != positionMap.end()) {
-		std::list<MoveEvent*>& moveEventList = it->second.moveEvent[eventType];
+		auto& moveEventList = it->second.moveEvent[eventType];
 		if (!moveEventList.empty()) {
 			return *moveEventList.begin();
 		}
@@ -485,7 +485,7 @@ bool MoveEvent::configureEvent(const pugi::xml_node& node)
 		}
 
 		//Gather vocation information
-		std::list<std::string> vocStringList;
+		std::vector<std::string> vocStringList;
 		for (auto vocationNode : node.children()) {
 			pugi::xml_attribute vocationNameAttribute = vocationNode.attribute("name");
 			if (!vocationNameAttribute) {

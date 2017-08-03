@@ -84,7 +84,7 @@ struct LuaVariant {
 struct LuaTimerEventDesc {
 	int32_t scriptId = -1;
 	int32_t function = -1;
-	std::list<int32_t> parameters;
+	std::vector<int32_t> parameters;
 	uint32_t eventId = 0;
 
 	LuaTimerEventDesc() = default;
@@ -413,7 +413,7 @@ class LuaScriptInterface
 		std::string getStackTrace(const std::string& error_desc);
 
 		static std::string getErrorDesc(ErrorCode_t code);
-		static bool getArea(lua_State* L, std::list<uint32_t>& list, uint32_t& rows);
+		static bool getArea(lua_State* L, std::vector<uint32_t>& list, uint32_t& rows);
 
 		//lua functions
 		static int luaDoPlayerAddItem(lua_State* L);

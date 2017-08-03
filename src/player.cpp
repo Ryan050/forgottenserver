@@ -1178,7 +1178,7 @@ void Player::onRemoveCreature(Creature* creature, bool isLogout)
 	}
 }
 
-void Player::openShopWindow(Npc* npc, const std::list<ShopInfo>& shop)
+void Player::openShopWindow(Npc* npc, const std::vector<ShopInfo>& shop)
 {
 	shopItemList = shop;
 	sendShop(npc);

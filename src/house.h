@@ -47,8 +47,8 @@ class AccessList
 		std::string list;
 		std::unordered_set<uint32_t> playerList;
 		std::unordered_set<uint32_t> guildList; // TODO: include ranks
-		std::list<std::string> expressionList;
-		std::list<std::pair<std::regex, bool>> regExList;
+		std::vector<std::string> expressionList;
+		std::deque<std::pair<std::regex, bool>> regExList;
 };
 
 class Door final : public Item
@@ -110,8 +110,8 @@ enum AccessHouseLevel_t {
 	HOUSE_OWNER = 3,
 };
 
-using HouseTileList = std::list<HouseTile*>;
-using HouseBedItemList = std::list<BedItem*>;
+using HouseTileList = std::vector<HouseTile*>;
+using HouseBedItemList = std::vector<BedItem*>;
 
 class HouseTransferItem final : public Item
 {

@@ -182,10 +182,10 @@ class AreaCombat
 
 		void getList(const Position& centerPos, const Position& targetPos, std::forward_list<Tile*>& list) const;
 
-		void setupArea(const std::list<uint32_t>& list, uint32_t rows);
+		void setupArea(const std::vector<uint32_t>& list, uint32_t rows);
 		void setupArea(int32_t length, int32_t spread);
 		void setupArea(int32_t radius);
-		void setupExtArea(const std::list<uint32_t>& list, uint32_t rows);
+		void setupExtArea(const std::vector<uint32_t>& list, uint32_t rows);
 		void clear();
 
 	protected:
@@ -198,7 +198,7 @@ class AreaCombat
 			MATRIXOPERATION_ROTATE270,
 		};
 
-		MatrixArea* createArea(const std::list<uint32_t>& list, uint32_t rows);
+		MatrixArea* createArea(const std::vector<uint32_t>& list, uint32_t rows);
 		void copyArea(const MatrixArea* input, MatrixArea* output, MatrixOperation_t op) const;
 
 		MatrixArea* getArea(const Position& centerPos, const Position& targetPos) const {

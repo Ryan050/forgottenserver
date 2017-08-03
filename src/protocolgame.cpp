@@ -1495,7 +1495,7 @@ void ProtocolGame::sendCloseShop()
 	writeToOutputBuffer(msg);
 }
 
-void ProtocolGame::sendSaleItemList(const std::list<ShopInfo>& shop)
+void ProtocolGame::sendSaleItemList(const std::vector<ShopInfo>& shop)
 {
 	NetworkMessage msg;
 	msg.addByte(0x7B);
@@ -2041,8 +2041,8 @@ void ProtocolGame::sendTradeItemRequest(const std::string& traderName, const Ite
 	msg.addString(traderName);
 
 	if (const Container* tradeContainer = item->getContainer()) {
-		std::list<const Container*> listContainer {tradeContainer};
-		std::list<const Item*> itemList {tradeContainer};
+		std::deque<const Container*> listContainer{tradeContainer};
+		std::vector<const Item*> itemList{tradeContainer};
 		while (!listContainer.empty()) {
 			const Container* container = listContainer.front();
 			listContainer.pop_front();

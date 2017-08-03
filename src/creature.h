@@ -28,8 +28,8 @@
 #include "enums.h"
 #include "creatureevent.h"
 
-using ConditionList = std::list<Condition*>;
-using CreatureEventList = std::list<CreatureEvent*>;
+using ConditionList = std::vector<Condition*>;
+using CreatureEventList = std::vector<CreatureEvent*>;
 
 enum slots_t : uint8_t {
 	CONST_SLOT_WHEREEVER = 0,
@@ -292,7 +292,7 @@ class Creature : virtual public Thing
 			return master;
 		}
 
-		const std::list<Creature*>& getSummons() const {
+		const std::vector<Creature*>& getSummons() const {
 			return summons;
 		}
 
@@ -486,7 +486,7 @@ class Creature : virtual public Thing
 		using CountMap = std::map<uint32_t, CountBlock_t>;
 		CountMap damageMap;
 
-		std::list<Creature*> summons;
+		std::vector<Creature*> summons;
 		CreatureEventList eventsList;
 		ConditionList conditions;
 

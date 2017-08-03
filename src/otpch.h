@@ -25,11 +25,11 @@
 #include <algorithm>
 #include <chrono>
 #include <cstdint>
+#include <deque>
 #include <forward_list>
 #include <functional>
 #include <iomanip>
 #include <iostream>
-#include <list>
 #include <map>
 #include <memory>
 #include <mutex>

@@ -28,7 +28,7 @@ class Game;
 class Spawn;
 
 using CreatureHashSet = std::unordered_set<Creature*>;
-using CreatureList = std::list<Creature*>;
+using CreatureList = std::deque<Creature*>;
 
 enum TargetSearchType_t {
 	TARGETSEARCH_DEFAULT,

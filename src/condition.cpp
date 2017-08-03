@@ -980,7 +980,7 @@ bool ConditionDamage::init()
 			startDamage = std::max<int32_t>(1, std::ceil(amount / 20.0));
 		}
 
-		std::list<int32_t> list;
+		std::vector<int32_t> list;
 		ConditionDamage::generateDamageList(amount, startDamage, list);
 		for (int32_t value : list) {
 			addDamage(1, tickInterval, -value);
@@ -1200,7 +1200,7 @@ uint32_t ConditionDamage::getIcons() const
 	return icons;
 }
 
-void ConditionDamage::generateDamageList(int32_t amount, int32_t start, std::list<int32_t>& list)
+void ConditionDamage::generateDamageList(int32_t amount, int32_t start, std::vector<int32_t>& list)
 {
 	amount = std::abs(amount);
 	int32_t sum = 0;

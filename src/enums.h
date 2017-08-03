@@ -548,7 +548,7 @@ struct MarketStatistics {
 
 struct ModalWindow
 {
-	std::list<std::pair<std::string, uint8_t>> buttons, choices;
+	std::vector<std::pair<std::string, uint8_t>> buttons, choices;
 	std::string title, message;
 	uint32_t id;
 	uint8_t defaultEnterButton, defaultEscapeButton;
@@ -583,8 +583,8 @@ struct CombatDamage
 	}
 };
 
-using MarketOfferList = std::list<MarketOffer>;
-using HistoryMarketOfferList = std::list<HistoryMarketOffer>;
-using ShopInfoList = std::list<ShopInfo>;
+using MarketOfferList = std::vector<MarketOffer>;
+using HistoryMarketOfferList = std::vector<HistoryMarketOffer>;
+using ShopInfoList = std::vector<ShopInfo>;
 
 #endif

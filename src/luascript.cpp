@@ -2919,7 +2919,7 @@ int LuaScriptInterface::luaGetWorldUpTime(lua_State* L)
 	return 1;
 }
 
-bool LuaScriptInterface::getArea(lua_State* L, std::list<uint32_t>& list, uint32_t& rows)
+bool LuaScriptInterface::getArea(lua_State* L, std::vector<uint32_t>& list, uint32_t& rows)
 {
 	lua_pushnil(L);
 	for (rows = 0; lua_next(L, -2) != 0; ++rows) {
@@ -2959,7 +2959,7 @@ int LuaScriptInterface::luaCreateCombatArea(lua_State* L)
 	int parameters = lua_gettop(L);
 	if (parameters >= 2) {
 		uint32_t rowsExtArea;
-		std::list<uint32_t> listExtArea;
+		std::vector<uint32_t> listExtArea;
 		if (!isTable(L, 2) || !getArea(L, listExtArea, rowsExtArea)) {
 			reportErrorFunc("Invalid extended area table.");
 			pushBoolean(L, false);
@@ -2969,7 +2969,7 @@ int LuaScriptInterface::luaCreateCombatArea(lua_State* L)
 	}
 
 	uint32_t rowsArea = 0;
-	std::list<uint32_t> listArea;
+	std::vector<uint32_t> listArea;
 	if (!isTable(L, 1) || !getArea(L, listArea, rowsArea)) {
 		reportErrorFunc("Invalid area table.");
 		pushBoolean(L, false);

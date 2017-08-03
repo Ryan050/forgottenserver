@@ -5312,7 +5312,7 @@ std::forward_list<Item*> Game::getMarketItemList(uint16_t wareId, uint16_t suffi
 	std::forward_list<Item*> itemList;
 	uint16_t count = 0;
 
-	std::list<Container*> containers { depotChest, inbox };
+	std::deque<Container*> containers{depotChest, inbox};
 	do {
 		Container* container = containers.front();
 		containers.pop_front();

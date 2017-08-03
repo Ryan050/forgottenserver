@@ -26,8 +26,8 @@
 class Mission;
 class Quest;
 
-using MissionsList = std::list<Mission>;
-using QuestsList = std::list<Quest>;
+using MissionsList = std::vector<Mission>;
+using QuestsList = std::vector<Quest>;
 
 class Mission
 {

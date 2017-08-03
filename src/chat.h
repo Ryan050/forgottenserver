@@ -116,7 +116,7 @@ class PrivateChatChannel final : public ChatChannel
 		uint32_t owner = 0;
 };
 
-using ChannelList = std::list<ChatChannel*>;
+using ChannelList = std::deque<ChatChannel*>;
 
 class Chat
 {

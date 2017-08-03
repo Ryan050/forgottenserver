@@ -24,7 +24,7 @@
 #include "player.h"
 #include "database.h"
 
-using ItemBlockList = std::list<std::pair<int32_t, Item*>>;
+using ItemBlockList = std::vector<std::pair<int32_t, Item*>>;
 
 class IOLoginData
 {

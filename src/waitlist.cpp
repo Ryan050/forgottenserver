@@ -19,6 +19,8 @@
 
 #include "otpch.h"
 
+#include <list>
+
 #include "configmanager.h"
 #include "game.h"
 #include "waitlist.h"

@@ -196,7 +196,7 @@ bool Weapon::configureEvent(const pugi::xml_node& node)
 		wieldUnproperly = attr.as_bool();
 	}
 
-	std::list<std::string> vocStringList;
+	std::vector<std::string> vocStringList;
 	for (auto vocationNode : node.children()) {
 		if (!(attr = vocationNode.attribute("name"))) {
 			continue;

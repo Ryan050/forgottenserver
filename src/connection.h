@@ -116,7 +116,7 @@ class Connection : public std::enable_shared_from_this<Connection>
 
 		std::recursive_mutex connectionLock;
 
-		std::list<OutputMessage_ptr> messageQueue;
+		std::deque<OutputMessage_ptr> messageQueue;
 
 		ConstServicePort_ptr service_port;
 		Protocol_ptr protocol;

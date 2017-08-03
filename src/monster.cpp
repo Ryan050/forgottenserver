@@ -467,7 +467,7 @@ void Monster::onCreatureLeave(Creature* creature)
 
 bool Monster::searchTarget(TargetSearchType_t searchType /*= TARGETSEARCH_DEFAULT*/)
 {
-	std::list<Creature*> resultList;
+	std::vector<Creature*> resultList;
 	const Position& myPos = getPosition();
 
 	for (Creature* creature : targetList) {

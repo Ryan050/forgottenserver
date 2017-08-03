@@ -1193,7 +1193,7 @@ void AreaCombat::copyArea(const MatrixArea* input, MatrixArea* output, MatrixOpe
 	}
 }
 
-MatrixArea* AreaCombat::createArea(const std::list<uint32_t>& list, uint32_t rows)
+MatrixArea* AreaCombat::createArea(const std::vector<uint32_t>& list, uint32_t rows)
 {
 	uint32_t cols;
 	if (rows == 0) {
@@ -1226,7 +1226,7 @@ MatrixArea* AreaCombat::createArea(const std::list<uint32_t>& list, uint32_t row
 	return area;
 }
 
-void AreaCombat::setupArea(const std::list<uint32_t>& list, uint32_t rows)
+void AreaCombat::setupArea(const std::vector<uint32_t>& list, uint32_t rows)
 {
 	MatrixArea* area = createArea(list, rows);
 
@@ -1253,7 +1253,7 @@ void AreaCombat::setupArea(const std::list<uint32_t>& list, uint32_t rows)
 
 void AreaCombat::setupArea(int32_t length, int32_t spread)
 {
-	std::list<uint32_t> list;
+	std::vector<uint32_t> list;
 
 	uint32_t rows = length;
 	int32_t cols = 1;
@@ -1304,7 +1304,7 @@ void AreaCombat::setupArea(int32_t radius)
 		{0, 0, 0, 0, 0, 0, 8, 0, 0, 0, 0, 0, 0}
 	};
 
-	std::list<uint32_t> list;
+	std::vector<uint32_t> list;
 
 	for (auto& row : area) {
 		for (int cell : row) {
@@ -1321,7 +1321,7 @@ void AreaCombat::setupArea(int32_t radius)
 	setupArea(list, 13);
 }
 
-void AreaCombat::setupExtArea(const std::list<uint32_t>& list, uint32_t rows)
+void AreaCombat::setupExtArea(const std::vector<uint32_t>& list, uint32_t rows)
 {
 	if (list.empty()) {
 		return;

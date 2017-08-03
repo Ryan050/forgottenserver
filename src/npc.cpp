@@ -795,7 +795,7 @@ int NpcScriptInterface::luaOpenShopWindow(lua_State* L)
 		return 1;
 	}
 
-	std::list<ShopInfo> items;
+	std::vector<ShopInfo> items;
 	lua_pushnil(L);
 	while (lua_next(L, -2) != 0) {
 		const auto tableIndex = lua_gettop(L);
@@ -1014,7 +1014,7 @@ int NpcScriptInterface::luaNpcOpenShopWindow(lua_State* L)
 		buyCallback = luaL_ref(L, LUA_REGISTRYINDEX);
 	}
 
-	std::list<ShopInfo> items;
+	std::vector<ShopInfo> items;
 
 	lua_pushnil(L);
 	while (lua_next(L, 3) != 0) {

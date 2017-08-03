@@ -761,7 +761,7 @@ class Item : virtual public Thing
 		//Don't add variables here, use the ItemAttribute class.
 };
 
-using ItemList = std::list<Item*>;
+using ItemList = std::vector<Item*>;
 using ItemDeque = std::deque<Item*>;
 
 #endif

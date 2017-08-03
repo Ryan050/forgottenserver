@@ -94,7 +94,7 @@ class Raids
 	private:
 		LuaScriptInterface scriptInterface{"Raid Interface"};
 
-		std::list<Raid*> raidList;
+		std::vector<Raid*> raidList;
 		Raid* running = nullptr;
 		uint64_t lastRaidEnd = 0;
 		uint32_t checkRaidsEvent = 0;
@@ -205,7 +205,7 @@ class AreaSpawnEvent final : public RaidEvent
 		bool executeEvent() final;
 
 	private:
-		std::list<MonsterSpawn> spawnList;
+		std::vector<MonsterSpawn> spawnList;
 		Position fromPos, toPos;
 };
 

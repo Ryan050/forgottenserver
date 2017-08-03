@@ -40,7 +40,7 @@ class ContainerIterator
 		Item* operator*();
 
 	protected:
-		std::list<const Container*> over;
+		std::deque<const Container*> over;
 		ItemDeque::const_iterator cur;
 
 		friend class Container;

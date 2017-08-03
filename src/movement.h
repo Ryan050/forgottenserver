@@ -41,7 +41,7 @@ enum MoveEvent_t {
 class MoveEvent;
 
 struct MoveEventList {
-	std::list<MoveEvent*> moveEvent[MOVE_EVENT_LAST];
+	std::vector<MoveEvent*> moveEvent[MOVE_EVENT_LAST];
 };
 
 using VocEquipMap = std::map<uint16_t, bool>;
