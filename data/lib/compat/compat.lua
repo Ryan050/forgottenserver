@@ -1316,3 +1316,11 @@ end
 function isNumber(str)
 	return tonumber(str) ~= nil
 end
+
+Game.startRaid = function(name)
+	if name == "Server Save" then
+		return RETURNVALUE_NOSUCHRAIDEXISTS
+	end
+
+	return Game.startEvent(name)
+end
